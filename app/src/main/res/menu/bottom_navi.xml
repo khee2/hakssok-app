@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragment_home"
+        android:title="홈"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/fragment_menu"
+        android:title="음식점"
+        android:icon="@drawable/menu"/>
+    <item
+        android:id="@+id/fragment_coupon"
+        android:title="제휴"
+        android:icon="@drawable/coupon"/>
+</menu>
