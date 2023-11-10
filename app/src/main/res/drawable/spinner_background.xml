@@ -3,8 +3,9 @@
     <item>
         <shape>
             <solid android:color="@color/white" />
-            <padding android:right="12dp"
-                android:left="12dp" />
+            <padding
+                android:left="12dp"
+                android:right="12dp" />
             <corners android:radius="10dp" />
         </shape>
     </item>
@@ -13,7 +14,7 @@
         android:height="24dp"
         android:bottom="10dp"
         android:drawable="@drawable/down"
-        android:gravity="end"
+        android:gravity="center|right"
         android:right="8dp"
         android:start="8dp"
         android:top="8dp" />
