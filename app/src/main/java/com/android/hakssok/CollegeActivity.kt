@@ -3,16 +3,19 @@ package com.android.hakssok
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.ListPageBinding
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
+import org.w3c.dom.Text
 
-class RestaurantActivity : AppCompatActivity() {
+class CollegeActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
     private val itemList = arrayListOf<ListLayout>()
@@ -25,9 +28,10 @@ class RestaurantActivity : AppCompatActivity() {
 
         val categorySpinner: Spinner = findViewById(R.id.category_spinner)
         val toolbarTitle: TextView = findViewById(R.id.toolbar_title)
-        val categoryList = resources.getStringArray(R.array.category)
+        val categoryList = resources.getStringArray(R.array.college)
 
-        toolbarTitle.text = resources.getString(R.string.category)
+        toolbarTitle.text = resources.getString(R.string.college)
+        categorySpinner.dropDownWidth = 400
 
         val adapter = SpinnerAdapter(this, categoryList)
         categorySpinner.adapter = adapter
@@ -57,7 +61,7 @@ class RestaurantActivity : AppCompatActivity() {
 
             fun getRestaurantInfo(num: Int) {
                 val restaurant = db.collection("store")
-                restaurant.whereEqualTo("category", categoryList[num])
+                restaurant.whereEqualTo("college", categoryList[num])
                     .get()
                     .addOnSuccessListener { result ->
                         itemList.clear()
@@ -67,10 +71,9 @@ class RestaurantActivity : AppCompatActivity() {
                                 info["location"] as String?,
                                 info["date"] as String?,
                                 info["content"] as String?,
-                                info["college"] as String?
+                                null
                             )
                             itemList.add(restaurantInfo)
-
                         }
                         listAdapter.notifyDataSetChanged()
                     }
@@ -78,11 +81,3 @@ class RestaurantActivity : AppCompatActivity() {
         }
     }
 }
-
-class ListLayout(
-    val name: String?,
-    val location: String?,
-    val date: String?,
-    val content: String?,
-    val college: String?
-)
