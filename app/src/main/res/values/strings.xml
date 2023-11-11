@@ -2,4 +2,7 @@
     <string name="app_name">Hakssok</string>
     <string name="category">음식점 모아보기</string>
     <string name="college">제휴 모아보기</string>
+    <string name="default_web_client_id" translatable="false">1065303182133-6ci70s5hv9h7jqg94he8pgefghv01aqa.apps.googleusercontent.com</string>
+    <string name="logo_name">학쏙</string>
+    <string name="logo_description">학교 주변 음식점 정보 한눈에 쏙!</string>
 </resources>
