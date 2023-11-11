@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.android.hakssok'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.android.hakssok"
@@ -30,6 +30,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    viewBinding {
+        enabled = true
     }
 }
 
