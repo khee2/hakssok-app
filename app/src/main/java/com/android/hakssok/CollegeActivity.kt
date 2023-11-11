@@ -3,17 +3,14 @@ package com.android.hakssok
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.ListPageBinding
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
-import org.w3c.dom.Text
 
 class CollegeActivity : AppCompatActivity() {
 
@@ -31,7 +28,7 @@ class CollegeActivity : AppCompatActivity() {
         val categoryList = resources.getStringArray(R.array.college)
 
         toolbarTitle.text = resources.getString(R.string.college)
-        categorySpinner.dropDownWidth = 400
+        categorySpinner.dropDownWidth = 420
 
         val adapter = SpinnerAdapter(this, categoryList)
         categorySpinner.adapter = adapter
@@ -76,6 +73,13 @@ class CollegeActivity : AppCompatActivity() {
                             itemList.add(restaurantInfo)
                         }
                         listAdapter.notifyDataSetChanged()
+                    }
+                    .addOnCompleteListener {
+                        if (itemList.isEmpty()) {
+                            binding.noContentText.visibility = View.VISIBLE
+                        } else {
+                            binding.noContentText.visibility = View.GONE
+                        }
                     }
             }
         }
