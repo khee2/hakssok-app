@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +22,7 @@
             android:fontFamily="@font/pretendardbold"
             android:text="음식점 모아보기"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -48,7 +48,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
+        android:layout_height="420dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view" />
