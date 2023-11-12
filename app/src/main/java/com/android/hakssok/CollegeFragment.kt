@@ -1,37 +1,43 @@
 package com.android.hakssok
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.hakssok.databinding.ListPageBinding
+import com.android.hakssok.databinding.FragmentListPageBinding
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
 
-class RestaurantActivity : AppCompatActivity() {
-
+class CollegeFragment : Fragment() {
     private val db = Firebase.firestore
     private val itemList = arrayListOf<ListLayout>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        var binding = ListPageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        FirebaseApp.initializeApp(this)
+        var binding = FragmentListPageBinding.inflate(inflater, container, false)
 
-        val categorySpinner: Spinner = findViewById(R.id.category_spinner)
-        val categoryList = resources.getStringArray(R.array.category)
+        val categorySpinner: Spinner = binding.categorySpinner
+        val toolbarTitle: TextView = binding.toolbarTitle
+        val categoryList = resources.getStringArray(R.array.college)
 
-        val adapter = SpinnerAdapter(this, categoryList)
+        toolbarTitle.text = resources.getString(R.string.college)
+        categorySpinner.dropDownWidth = 420
+
+        val adapter = SpinnerAdapter(inflater.context, categoryList)
         categorySpinner.adapter = adapter
 
         val listAdapter = ListAdapter(itemList)
 
         binding.recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = listAdapter
 
         categorySpinner.onItemSelectedListener = object :
@@ -53,7 +59,7 @@ class RestaurantActivity : AppCompatActivity() {
 
             fun getRestaurantInfo(num: Int) {
                 val restaurant = db.collection("store")
-                restaurant.whereEqualTo("category", categoryList[num])
+                restaurant.whereEqualTo("college", categoryList[num])
                     .get()
                     .addOnSuccessListener { result ->
                         itemList.clear()
@@ -63,22 +69,21 @@ class RestaurantActivity : AppCompatActivity() {
                                 info["location"] as String?,
                                 info["date"] as String?,
                                 info["content"] as String?,
-                                info["college"] as String?
+                                null
                             )
                             itemList.add(restaurantInfo)
-
                         }
                         listAdapter.notifyDataSetChanged()
                     }
+                    .addOnCompleteListener {
+                        if (itemList.isEmpty()) {
+                            binding.noContentText.visibility = View.VISIBLE
+                        } else {
+                            binding.noContentText.visibility = View.GONE
+                        }
+                    }
             }
         }
+        return binding.root
     }
 }
-
-class ListLayout(
-    val name: String?,
-    val location: String?,
-    val date: String?,
-    val content: String?,
-    val college: String?
-)
