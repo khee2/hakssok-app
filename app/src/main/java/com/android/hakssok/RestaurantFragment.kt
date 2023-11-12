@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
+import android.widget.TextView
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +26,10 @@ class RestaurantFragment : Fragment() {
         val binding = FragmentListPageBinding.inflate(inflater, container, false)
 
         val categorySpinner: Spinner = binding.categorySpinner
+        val toolbarTitle: TextView = binding.toolbarTitle
         val categoryList = resources.getStringArray(R.array.category)
+
+        toolbarTitle.text = resources.getString(R.string.category)
 
         val adapter = SpinnerAdapter(inflater.context, categoryList)
         categorySpinner.adapter = adapter
