@@ -1,41 +1,39 @@
 package com.android.hakssok
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.hakssok.databinding.ListPageBinding
+import com.android.hakssok.databinding.FragmentListPageBinding
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.firestore
 
-class RestaurantActivity : AppCompatActivity() {
-
+class RestaurantFragment : Fragment() {
     private val db = Firebase.firestore
     private val itemList = arrayListOf<ListLayout>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        var binding = ListPageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        FirebaseApp.initializeApp(this)
+        val binding = FragmentListPageBinding.inflate(inflater, container, false)
 
-        val categorySpinner: Spinner = findViewById(R.id.category_spinner)
-        val toolbarTitle: TextView = findViewById(R.id.toolbar_title)
+        val categorySpinner: Spinner = binding.categorySpinner
         val categoryList = resources.getStringArray(R.array.category)
 
-        toolbarTitle.text = resources.getString(R.string.category)
-
-        val adapter = SpinnerAdapter(this, categoryList)
+        val adapter = SpinnerAdapter(inflater.context, categoryList)
         categorySpinner.adapter = adapter
 
         val listAdapter = ListAdapter(itemList)
 
         binding.recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = listAdapter
 
         categorySpinner.onItemSelectedListener = object :
@@ -76,6 +74,7 @@ class RestaurantActivity : AppCompatActivity() {
                     }
             }
         }
+        return binding.root
     }
 }
 
