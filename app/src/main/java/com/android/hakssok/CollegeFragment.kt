@@ -59,16 +59,18 @@ class CollegeFragment : Fragment() {
 
             fun getRestaurantInfo(num: Int) {
                 val restaurant = db.collection("store")
-                restaurant.whereEqualTo("college", categoryList[num])
+                restaurant.whereArrayContains("college", categoryList[num])
                     .get()
                     .addOnSuccessListener { result ->
                         itemList.clear()
                         for (info in result) {
+                            val collegeArray = info.get("college") as ArrayList<*>
+                            val index = collegeArray.indexOf(categoryList[num])
                             val restaurantInfo = ListLayout(
                                 info["storeName"] as String?,
                                 info["location"] as String?,
-                                info["date"] as String?,
-                                info["content"] as String?,
+                                (info.get("date") as ArrayList<*>)[index] as String?,
+                                (info.get("content") as ArrayList<*>)[index] as String?,
                                 null,
                                 info.id
                             )
