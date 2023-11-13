@@ -1,6 +1,7 @@
 package com.android.hakssok
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +70,8 @@ class RestaurantFragment : Fragment() {
                                 info["location"] as String?,
                                 info["date"] as String?,
                                 info["content"] as String?,
-                                info["college"] as String?
+                                info["college"] as String?,
+                                info.id
                             )
                             itemList.add(restaurantInfo)
 
@@ -87,5 +89,6 @@ class ListLayout(
     val location: String?,
     val date: String?,
     val content: String?,
-    val college: String?
+    val college: String?,
+    val storeId: String?
 )

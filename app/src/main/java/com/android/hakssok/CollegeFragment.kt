@@ -69,7 +69,8 @@ class CollegeFragment : Fragment() {
                                 info["location"] as String?,
                                 info["date"] as String?,
                                 info["content"] as String?,
-                                null
+                                null,
+                                info.id
                             )
                             itemList.add(restaurantInfo)
                         }
