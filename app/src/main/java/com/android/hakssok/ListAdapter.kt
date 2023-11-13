@@ -22,8 +22,13 @@ class ListAdapter(val itemList: ArrayList<ListLayout>) :
         holder.name.text = itemList[position].name
         holder.date.text = itemList[position].date
         holder.content.text = itemList[position].content
-        holder.college.text = itemList[position].college
         holder.location.text = itemList[position].location
+        val college = itemList[position].college
+        if (college != null) {
+            holder.college.text = college
+        } else {
+            holder.college.visibility = View.GONE
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
