@@ -90,3 +90,12 @@ class CollegeFragment : Fragment() {
         return binding.root
     }
 }
+
+class ListLayout(
+    val name: String?,
+    val location: String?,
+    val date: String?,
+    val content: String?,
+    val college: String?,
+    val storeId: String?
+)
