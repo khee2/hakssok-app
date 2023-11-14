@@ -25,7 +25,6 @@ class CouponListAdapter(val couponList: ArrayList<CouponListLayout>) :
         holder.date.text = couponList[position].date
         holder.coupon.text = couponList[position].coupon
         holder.college.text = couponList[position].college
-        couponList[position].college?.let { Log.d("goeun", it) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

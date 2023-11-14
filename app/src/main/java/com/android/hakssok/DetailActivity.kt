@@ -21,38 +21,54 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: DetailPageBinding
 
     private val db = Firebase.firestore
-    private val itemList = arrayListOf<ReviewListLayout>()
+    private val reviewList = arrayListOf<ReviewListLayout>()
+    private val couponList = arrayListOf<CouponListLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DetailPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val listAdapter = ReviewListAdapter(itemList)
+        // recyclerview
+        val reviewAdapter = ReviewListAdapter(reviewList)
+        val couponAdapter = CouponListAdapter(couponList)
 
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.recyclerView.adapter = listAdapter
+        binding.recyclerView.adapter = reviewAdapter
+
+        binding.couponRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.couponRecyclerView.adapter = couponAdapter
 
         val mapFragment: SupportMapFragment =
             supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val restaurant = db.collection("store")
-        restaurant.limit(1)
-            .whereEqualTo("storeName", intent.getStringExtra("storeName"))
+        restaurant
+            .document(intent.getStringExtra("storeId").toString())
             .get()
             .addOnSuccessListener { result ->
-                for (info in result) {
-                    binding.name.text = info["storeName"] as String?
-                    binding.date.text = info["date"] as String?
-                    binding.college.text = info["college"] as String?
-                    binding.coupon.text = info["content"] as String?
+                couponList.clear()
+                val dateList = result.get("date") as ArrayList<*>
+                val contentList = result.get("content") as ArrayList<*>
+                val collegeList = result.get("college") as ArrayList<*>
 
-                    // TODO 문의 전화 넣기
+                binding.name.text = result["storeName"] as String?
+                binding.location.text = result["location"] as String?
+                binding.phone.text = result["phone"] as String?
+
+                for (index in 0 until dateList.size) {
+                    val coupon = CouponListLayout (
+                        dateList[index] as String?,
+                        contentList[index] as String?,
+                        collegeList[index] as String?
+                    )
+                    couponList.add(coupon)
                 }
+                couponAdapter.notifyDataSetChanged()
             }
-
 
         val user = db.collection("user")
         user.whereEqualTo("storeId", intent.getStringExtra("storeId"))
@@ -68,9 +84,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         review["picture"] as String?
                     )
 
-                    itemList.add(review)
+                    reviewList.add(review)
                 }
-                listAdapter.notifyDataSetChanged()
+                reviewAdapter.notifyDataSetChanged()
             }
 
     }

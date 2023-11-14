@@ -57,9 +57,6 @@ class RestaurantFragment : Fragment() {
             }
 
             fun getRestaurantInfo(num: Int) {
-                // TODO 데이터베이스 변경 반영
-                // Recycler View 생성 필요
-                // 대학, 내용, 기간 반영 필요
                 val restaurant = db.collection("store")
                 restaurant.whereEqualTo("category", categoryList[num])
                     .get()

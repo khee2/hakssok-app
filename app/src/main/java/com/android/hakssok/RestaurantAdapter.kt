@@ -31,14 +31,12 @@ class RestaurantAdapter(val restaurnatList: ArrayList<RestaurantListLayout>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text = restaurnatList[position].name
         holder.location.text = restaurnatList[position].location
-        restaurnatList[position].location?.let { Log.d("goeun111", it) }
         for (index in 0 until (restaurnatList[position].date.size)) {
             val couponInfo = CouponListLayout(
                 restaurnatList[position].date.get(index),
                 restaurnatList[position].content?.get(index),
                 restaurnatList[position].college?.get(index)
             )
-            restaurnatList[position].date.get(index)?.let { Log.d("goeun111", it) }
             itemList.add(couponInfo)
         }
 

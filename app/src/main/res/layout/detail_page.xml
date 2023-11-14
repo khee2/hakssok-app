@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:overScrollModeandroid="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,72 +21,54 @@
         android:id="@+id/restaurant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/recycler_view"
-        android:orientation="vertical"
         android:background="@color/white"
-        android:padding="10dp">
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="1dp"
-            android:orientation="vertical" >
+            android:layout_marginRight="30dp"
+            android:background="@drawable/bottom_border_background"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:fontFamily="@font/pretendardbold"
-            android:textColor="@color/black"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/pretendardbold"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendardmedium"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendardmedium"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendardmedium"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/pretendardmedium"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/tel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/pretendardmedium"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/college"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:fontFamily="@font/pretendardbold"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/coupon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:fontFamily="@font/pretendardmedium"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/coupon_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/phone" />
 
         </LinearLayout>
 
@@ -97,7 +80,9 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view" />
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+        overScrollModeandroid:overScrollMode="never" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
