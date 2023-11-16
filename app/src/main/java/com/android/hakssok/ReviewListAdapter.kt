@@ -6,6 +6,11 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.String.format
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ReviewListAdapter(val reviewList: ArrayList<ReviewListLayout>) :
     RecyclerView.Adapter<ReviewListAdapter.ViewHolder>() {
@@ -22,13 +27,16 @@ class ReviewListAdapter(val reviewList: ArrayList<ReviewListLayout>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text = reviewList[position].username
-        holder.date.text = reviewList[position].date.toString()
+        val time = reviewList[position].date.toDate()
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val str = format.format(time)
+        holder.date.text = str
         holder.review.text = reviewList[position].review
-        // 사진 추가
+        // TODO 사진 추가
         holder.ratingBar.rating = reviewList[position].score.toString().toFloat()
 
         // TODO 플로어 버튼 누르면 리뷰 화면으로 전환
-        // 가게 이름 넘기기
+        // 가게 아이디 넘기기
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
