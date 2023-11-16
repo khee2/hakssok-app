@@ -1,7 +1,6 @@
 package com.android.hakssok
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.DetailPageBinding
@@ -45,6 +44,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        // TODO 하단 탭 눌리게 하기
+
         val restaurant = db.collection("store")
         restaurant
             .document(intent.getStringExtra("storeId").toString())
@@ -60,7 +61,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.phone.text = result["phone"] as String?
 
                 for (index in 0 until dateList.size) {
-                    val coupon = CouponListLayout (
+                    val coupon = CouponListLayout(
                         dateList[index] as String?,
                         contentList[index] as String?,
                         collegeList[index] as String?
@@ -75,6 +76,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             .get()
             .addOnSuccessListener { result ->
                 // TODO TimeStamp 수정 필요
+                // score 라이브러리 사용하기
+                // 사진 저장 방법 찾아보기
+                // 구글 지도 마커 생성하기
                 for (review in result) {
                     val review = ReviewListLayout(
                         review["username"] as String?,
@@ -83,7 +87,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         review["score"] as Number?,
                         review["picture"] as String?
                     )
-
                     reviewList.add(review)
                 }
                 reviewAdapter.notifyDataSetChanged()
