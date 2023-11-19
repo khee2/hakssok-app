@@ -2,6 +2,8 @@
     <string name="app_name">Hakssok</string>
     <string name="category">음식점 모아보기</string>
     <string name="college">제휴 모아보기</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo_name">학쏙</string>
     <string name="logo_description">학교 주변 음식점 정보 한눈에 쏙!</string>
     <string name="college_select_description">단과대를 선택해주세요</string>

@@ -3,28 +3,15 @@
     android:id="@+id/restaurant"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="30dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="30dp"
-    android:background="@drawable/bottom_border_background"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_marginBottom="5dp">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/college"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="7dp"
         android:fontFamily="@font/pretendardbold"
-        android:textColor="@color/black"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/pretendardmedium"
         android:textColor="@color/black"
         android:textSize="12dp" />
 
@@ -37,14 +24,6 @@
         android:textColor="@color/black"
         android:textSize="12dp" />
 
-    <TextView
-        android:id="@+id/college"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:fontFamily="@font/pretendardbold"
-        android:textColor="@color/black"
-        android:textSize="12dp" />
 
     <TextView
         android:id="@+id/coupon"
@@ -56,4 +35,3 @@
         android:textSize="12dp" />
 
 </LinearLayout>
-
