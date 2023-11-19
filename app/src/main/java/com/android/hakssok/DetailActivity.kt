@@ -2,6 +2,7 @@ package com.android.hakssok
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.DetailPageBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,6 +44,12 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment: SupportMapFragment =
             supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+//        suwon1 = new LatLng(37.287617, 127.018057);
+//        mMap.addMarker(new MarkerOptions().position(suwon1).title("방화수령전"));
+//
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(suwon1));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suwon1,14));//지도를 14배율로 확대해서 보여줌
 
         // TODO 하단 탭 눌리게 하기
 
@@ -92,6 +99,21 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 reviewAdapter.notifyDataSetChanged()
             }
 
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.fragment_home -> {
+                    changeFragment(HomeFragment())
+                }
+                R.id.fragment_menu -> {
+                    changeFragment(RestaurantFragment())
+                }
+                R.id.fragment_coupon -> {
+                    changeFragment(CollegeFragment())
+                }
+            }
+            true
+        }
+
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -103,6 +125,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             .build()
         googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(position))
 
+    }
+
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.mainContent.id, fragment).commit()
     }
 }
 
