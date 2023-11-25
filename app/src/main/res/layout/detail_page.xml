@@ -25,7 +25,7 @@
         android:gravity="bottom"
         app:umanoDragView="@+id/restaurant"
         app:umanoOverlay="true"
-        app:umanoPanelHeight="500dp"
+        app:umanoPanelHeight="300dp"
         app:umanoScrollableView="@id/restaurant"
         app:umanoShadowHeight="0dp">
 

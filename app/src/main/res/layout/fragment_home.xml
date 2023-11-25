@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D9D9D9"
+    android:background="#ffe6a7"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -72,12 +72,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/radius_background"
         android:orientation="horizontal"
         android:paddingLeft="40dp"
         android:paddingTop="25dp"
         android:paddingBottom="25dp"
-        app:layout_constraintBottom_toTopOf="@id/recycler_view">
+        app:layout_constraintBottom_toTopOf="@id/my_college_coupon_recycler_view">
 
         <ImageView
             android:layout_width="24dp"
@@ -94,6 +94,7 @@
             android:text="제휴"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -103,6 +104,25 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view" />
+
+    <LinearLayout
+        android:id="@+id/no_content_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardmedium"
+            android:gravity="center"
+            android:padding="50dp"
+            android:text="등록된 제휴가 없습니다."
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/recycler_view" />
+
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

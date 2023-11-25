@@ -1,7 +1,6 @@
 package com.android.hakssok
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +28,7 @@ class RestaurantAdapter(val restaurnatList: ArrayList<RestaurantListLayout>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        itemList.clear()
         holder.name.text = restaurnatList[position].name
         holder.location.text = restaurnatList[position].location
         for (index in 0 until (restaurnatList[position].date.size)) {
