@@ -123,6 +123,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.registerBtn.setOnClickListener{
             val MyIntent = Intent(this, RegisterActivity::class.java)
             MyIntent.putExtra("storeId",intent.getStringExtra("storeId"))
+            MyIntent.putExtra("storeName",intent.getStringExtra("storeName"))
             startActivity(MyIntent)
         }
     }

@@ -22,33 +22,30 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d("야야", "2야야")
         val requestLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         )
         {
-            Log.d("야야", "3야야")
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
-                Log.d("야야", "4야야")
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("야야", "5야야")
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                Log.d("야야", "6야야")
                 LoginApp.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             LoginApp.id = account.id
+                            LoginApp.username = account.familyName + account.givenName
+
                             db.collection("user").document(account.id!!).get()
                                 .addOnSuccessListener { documentSnapshot ->
-                                    if (documentSnapshot.exists()) {
+                                    if (documentSnapshot.exists()) { // 기존 사용자
                                         val myIntent = Intent(
                                             this@LoginActivity,
                                             MainActivity::class.java
                                         )
                                         startActivity(myIntent)
                                         finish()
-                                    } else {
+                                    } else { // 신규 사용자 등록
                                         val user_info = hashMapOf(
                                             "name" to account.familyName + account.givenName,
                                             "email" to account.email,
@@ -92,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
             val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
-            Log.d("야야", "1야야")
             requestLauncher.launch(signInIntent)
         }
 

@@ -25,8 +25,11 @@ import com.google.firebase.storage.storage
 import org.checkerframework.checker.units.qual.s
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
@@ -42,6 +45,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var filePath: String
 
     private var storeId = ""
+    private var storeName = ""
 
     //    private var uploadOk = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +54,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         storeId = intent.getStringExtra("storeId").toString()
+        storeName = intent.getStringExtra("storeName").toString()
 
         binding.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
 //            star_count = rating.toInt()
@@ -182,22 +187,41 @@ class RegisterActivity : AppCompatActivity() {
     }
         fun ReviewLoad(reviewImageURL: String){
             val reviewText = binding.reviewText.text.toString()
+            // 현재 시간 가져오기
             val currentDateTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
-            val formattedDateTime = currentDateTime.format(formatter)
+
+            // UTC+9로 변환
+            val offset = ZoneOffset.ofHours(9)
+            val dateTimeWithOffset = currentDateTime.atOffset(offset)
+
+            // 포맷팅
+            val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 hh시 mm분 ss초")
+            val formattedTime = dateTimeWithOffset.format(formatter)
+
+            // 타임스탬프 형식으로 변환
+            val timestamp = Timestamp.valueOf(formattedTime)
+//            val timestamp: Long = Instant.now().toEpochMilli()
+
             var starCount = binding.ratingValue.text
             val registerInfo = hashMapOf(
-                "date" to formattedDateTime,
+                "date" to timestamp,
                 "picture" to reviewImageURL,
                 "review" to reviewText,
                 "storeId" to storeId,
+                "storeName" to storeName,
                 "score" to starCount,
-                "userName" to LoginApp.username
+                "userName" to LoginApp.username,
+                "id" to LoginApp.id
             )
+
+            val formatter2 = DateTimeFormatter.ofPattern("yyyyMMddhhmmssSS")
+            val formattedDateTime = currentDateTime.format(formatter2)
+
             db.collection("user")
                 .document(formattedDateTime)
                 .set(registerInfo)
                 .addOnSuccessListener {
+                    Toast.makeText(this, "리뷰 등록 완료!", Toast.LENGTH_SHORT).show()
                     val myIntent = Intent(this@RegisterActivity, MainActivity::class.java)
                     startActivity(myIntent)
                 }
