@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -35,7 +34,8 @@
             android:rating="0"
             android:secondaryProgressTint="@color/black"
             android:transformPivotX="0dp"
-            android:transformPivotY="0dp" />
+            android:transformPivotY="0dp"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 
