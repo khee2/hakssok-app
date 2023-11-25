@@ -1,6 +1,7 @@
 package com.android.hakssok
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,8 @@ class RestaurantAdapter(val restaurnatList: ArrayList<RestaurantListLayout>) :
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
             intent.putExtra("storeName", restaurnatList[position].name)
             intent.putExtra("storeId", restaurnatList[position].storeId)
+            intent.putExtra("latitude", restaurnatList[position].latitude)
+            intent.putExtra("longitude", restaurnatList[position].longitude)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
     }

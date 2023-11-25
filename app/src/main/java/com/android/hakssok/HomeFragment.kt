@@ -28,9 +28,9 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.myCollegeCouponRecyclerView.adapter = listAdapter
 
+        // TODO searchKeyword intent로 수정
         val searchKeyword = "공과대학"
 
-        // TODO 이후 대학 intent로 수정 필요 - 34번째 줄, 40번째 줄
         val restaurant = db.collection("store")
         restaurant.whereArrayContains("college", searchKeyword)
             .get()
