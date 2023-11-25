@@ -1,7 +1,9 @@
 package com.android.hakssok
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import com.android.hakssok.databinding.ActivityCollegeSelectBinding
 import com.google.firebase.Firebase
@@ -35,12 +37,27 @@ class CollegeSelectActivity : AppCompatActivity() {
         binding.collegeButtonSelect.setOnClickListener {
             val user = db.collection("user")
 
-            db.collection("user").document(LoginApp.token_id!!)
+            db.collection("user").document(LoginApp.id!!)
                 .update(
                     mapOf(
                         "college" to select_item
                     ),
                 )
+                .addOnSuccessListener {
+                    val myIntent = Intent(
+                        this@CollegeSelectActivity,
+                        MainActivity::class.java
+                    )
+                    startActivity(myIntent)
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(
+                        "실패",
+                        "Error writing document",
+                        e
+                    )
+                }
         }
     }
 }

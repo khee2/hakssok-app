@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <ImageButton
+        android:id="@+id/review_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingTop="30dp"
+        android:src="@drawable/back_btn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/pretendardbold"
+        android:text="@string/review_description"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:isIndicator="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:progressTint="#FD4154"
+            android:secondaryProgressTint="#FD4154"
+            android:rating="4"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/rating_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardregular"
+            android:text="4" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/review_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/review_frame"
+        android:gravity="top|left"
+        android:hint=" 리뷰를 작성해주세요"
+        android:fontFamily="@font/pretendardregular"
+        android:textColor="@color/black"
+        android:inputType="text|textMultiLine"
+        android:lines="8"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/galleryButton"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="80dp"-->
+        <!--            android:layout_gravity="left"-->
+        <!--            android:layout_marginLeft="50dp"-->
+        <!--            android:layout_marginTop="30dp"-->
+        <!--            android:background="@color/white"-->
+        <!--            android:src="@drawable/review_gallery" />-->
+
+        <ImageButton
+            android:id="@+id/pictureButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/white"
+            android:src="@drawable/review_photo" />
+
+        <ImageView
+            android:id="@+id/userImageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/white" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/reviewSumbit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+
+        android:src="@drawable/review_submit" />
+</LinearLayout>

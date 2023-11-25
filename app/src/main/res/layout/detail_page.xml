@@ -109,11 +109,12 @@
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/board_write"
+        android:id="@+id/register_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="80dp"
+        android:src="@drawable/floating_add_btn"
         app:backgroundTint="#FD4154"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -1,7 +1,11 @@
 package com.android.hakssok
 
+import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.DetailPageBinding
@@ -19,6 +23,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var googleMap: GoogleMap? = null
     private lateinit var binding: DetailPageBinding
+    private var isFabOpen = false
 
     private val db = Firebase.firestore
     private val reviewList = arrayListOf<ReviewListLayout>()
@@ -114,8 +119,13 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             true
         }
 
+        // ****여기 부분 새로 추가함.****
+        binding.registerBtn.setOnClickListener{
+            val MyIntent = Intent(this, RegisterActivity::class.java)
+            MyIntent.putExtra("storeId",intent.getStringExtra("storeId"))
+            startActivity(MyIntent)
+        }
     }
-
     override fun onMapReady(p0: GoogleMap) {
         googleMap = p0
         val lating = LatLng(37.9, 126.7)

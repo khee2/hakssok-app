@@ -22,45 +22,58 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d("야야", "2야야")
         val requestLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         )
         {
+            Log.d("야야", "3야야")
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
+                Log.d("야야", "4야야")
                 val account = task.getResult(ApiException::class.java)!!
+                Log.d("야야", "5야야")
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                Log.d("야야", "6야야")
                 LoginApp.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            LoginApp.token_id = account.idToken
+                            LoginApp.id = account.id
+                            db.collection("user").document(account.id!!).get()
+                                .addOnSuccessListener { documentSnapshot ->
+                                    if (documentSnapshot.exists()) {
+                                        val myIntent = Intent(
+                                            this@LoginActivity,
+                                            MainActivity::class.java
+                                        )
+                                        startActivity(myIntent)
+                                        finish()
+                                    } else {
+                                        val user_info = hashMapOf(
+                                            "name" to account.familyName + account.givenName,
+                                            "email" to account.email,
+                                            "id" to account.id,
+                                            "college" to ""
+                                        )
 
-                            val user = db.collection("user")
-
-                            val user_info = hashMapOf(
-                                "name" to account.familyName + account.givenName,
-                                "email" to account.email,
-                                "idToken" to account.idToken,
-                                "college" to ""
-                            )
-
-                            db.collection("user").document(account.idToken!!)
-                                .set(user_info)
-                                .addOnSuccessListener {
-                                    val myIntent = Intent(
-                                        this@LoginActivity,
-                                        CollegeSelectActivity::class.java
-                                    )
-                                    startActivity(myIntent)
-                                    finish()
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w(
-                                        "실패",
-                                        "Error writing document",
-                                        e
-                                    )
+                                        db.collection("user").document(account.id!!)
+                                            .set(user_info)
+                                            .addOnSuccessListener {
+                                                val myIntent = Intent(
+                                                    this@LoginActivity,
+                                                    CollegeSelectActivity::class.java
+                                                )
+                                                startActivity(myIntent)
+                                                finish()
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Log.w(
+                                                    "실패",
+                                                    "Error writing document",
+                                                    e
+                                                )
+                                            }
+                                    }
                                 }
                         } else {
                             Log.w("TAG", "signInWithCredential:failure", task.exception)
@@ -79,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                 .build()
 
             val signInIntent = GoogleSignIn.getClient(this, gso).signInIntent
+            Log.d("야야", "1야야")
             requestLauncher.launch(signInIntent)
         }
 
