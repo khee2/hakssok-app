@@ -123,31 +123,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, 20f))
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        mapFragment.onStart()
-//    }
-//    override fun onStop() {
-//        super.onStop()
-//        mapFragment.onStop()
-//    }
-//    override fun onResume() {
-//        super.onResume()
-//        mapFragment.onResume()
-//    }
-//    override fun onPause() {
-//        super.onPause()
-//        mapFragment.onPause()
-//    }
-//    override fun onLowMemory() {
-//        super.onLowMemory()
-//        mapFragment.onLowMemory()
-//    }
-//    override fun onDestroy() {
-//        mapFragment.onDestroy()
-//        super.onDestroy()
-//    }
-
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.mainContent.id, fragment).commit()

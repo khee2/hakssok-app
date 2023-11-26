@@ -32,11 +32,10 @@ class ReviewListAdapter(val reviewList: ArrayList<ReviewListLayout>) :
         val str = format.format(time)
         holder.date.text = str
         holder.review.text = reviewList[position].review
-        // TODO 사진 추가
+        //TODO 사진 추가
         holder.ratingBar.rating = reviewList[position].score.toString().toFloat()
 
-        // TODO 플로어 버튼 누르면 리뷰 화면으로 전환
-        // 가게 아이디 넘기기
+        //TODO 플로어 버튼 누르면 리뷰 화면으로 전환
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
