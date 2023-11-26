@@ -13,7 +13,7 @@ import com.google.firebase.firestore.firestore
 class HomeFragment : Fragment() {
 
     private val db = Firebase.firestore
-    private val itemList = arrayListOf<ListLayout>()
+    private val itemList = arrayListOf<RestaurantListForCollegeSearch>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,13 +39,16 @@ class HomeFragment : Fragment() {
                 for (info in result) {
                     val collegeArray = info.get("college") as ArrayList<*>
                     val index = collegeArray.indexOf(searchKeyword)
-                    val restaurantInfo = ListLayout(
+                    val restaurantInfo = RestaurantListForCollegeSearch(
                         info["storeName"] as String?,
+                        info.id,
                         info["location"] as String?,
-                        (info.get("date") as ArrayList<*>)[index] as String?,
-                        (info.get("content") as ArrayList<*>)[index] as String?,
-                        null,
-                        info.id
+                        info.get("date") as ArrayList<String>,
+                        info.get("content") as ArrayList<String>,
+                        info.get("college") as ArrayList<String>,
+                        info.get("latitude") as String?,
+                        info.get("longitude") as String?,
+                        index
                     )
                     itemList.add(restaurantInfo)
                 }

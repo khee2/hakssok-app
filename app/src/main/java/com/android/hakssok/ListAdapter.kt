@@ -1,7 +1,6 @@
 package com.android.hakssok
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class ListAdapter(val itemList: ArrayList<ListLayout>) :
+class ListAdapter(val itemList: ArrayList<RestaurantListForCollegeSearch>) :
     RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -22,11 +21,13 @@ class ListAdapter(val itemList: ArrayList<ListLayout>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val index = itemList[position].index
         holder.name.text = itemList[position].name
-        holder.date.text = itemList[position].date
-        holder.content.text = itemList[position].content
         holder.location.text = itemList[position].location
-        val college = itemList[position].college
+        holder.date.text = itemList[position].date.get(index)
+        holder.content.text = itemList[position].content?.get(index)
+
+        val college = itemList[position].college?.get(index)
         if (college != null) {
             holder.college.text = college
         } else {
@@ -34,9 +35,11 @@ class ListAdapter(val itemList: ArrayList<ListLayout>) :
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView?.context, DetailActivity::class.java)
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
             intent.putExtra("storeName", itemList[position].name)
             intent.putExtra("storeId", itemList[position].storeId)
+            intent.putExtra("latitude", itemList[position].latitude)
+            intent.putExtra("longitude", itemList[position].longitude)
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
     }
