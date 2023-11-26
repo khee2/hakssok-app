@@ -20,23 +20,20 @@ import androidx.core.content.FileProvider
 import com.android.hakssok.databinding.ActivityRegisterBinding
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.Timestamp
+
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.storage
-import org.checkerframework.checker.units.qual.s
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
-//    private var star_count = 0
 
     private val db = Firebase.firestore
     private val storage = Firebase.storage
@@ -47,7 +44,6 @@ class RegisterActivity : AppCompatActivity() {
     private var storeId = ""
     private var storeName = ""
 
-    //    private var uploadOk = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -57,7 +53,6 @@ class RegisterActivity : AppCompatActivity() {
         storeName = intent.getStringExtra("storeName").toString()
 
         binding.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
-//            star_count = rating.toInt()
             binding.ratingValue.text = rating.toInt().toString()
         }
         val requestGalleryLauncher = registerForActivityResult(
@@ -75,7 +70,6 @@ class RegisterActivity : AppCompatActivity() {
                 var inputStream = contentResolver.openInputStream(it.data!!.data!!)
                 val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
                 inputStream!!.close()
-                inputStream = null
 
                 bitmap?.let {
                     binding.userImageView.setImageBitmap(bitmap)
@@ -160,7 +154,7 @@ class RegisterActivity : AppCompatActivity() {
                 val storageRef = storage.reference
                 val timestamp =
                     SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.getDefault()).format(Date())
-                val fileName = "image/$timestamp.jpg"
+                val fileName = "image/${timestamp}.jpg"
                 val bitmapRef = storageRef.child(fileName)
 
                 val uploadTask: UploadTask = bitmapRef.putBytes(data)
@@ -171,8 +165,7 @@ class RegisterActivity : AppCompatActivity() {
                         ReviewLoad(reviewImageURL)
                     }
                 }
-            }
-            else {
+            } else {
                 ReviewLoad("")
             }
         }
@@ -185,75 +178,61 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(myIntent)
         }
     }
-        fun ReviewLoad(reviewImageURL: String){
-            val reviewText = binding.reviewText.text.toString()
-            // 현재 시간 가져오기
-            val currentDateTime = LocalDateTime.now()
 
-            // UTC+9로 변환
-            val offset = ZoneOffset.ofHours(9)
-            val dateTimeWithOffset = currentDateTime.atOffset(offset)
+    fun ReviewLoad(reviewImageURL: String) {
+        val reviewText = binding.reviewText.text.toString()
+        val currentTimestamp: Timestamp = Timestamp.now()
+        var starCount = binding.ratingValue.text.toString().toIntOrNull() ?: 0
+        Log.d("starcount는?", starCount.toString())
 
-            // 포맷팅
-            val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 hh시 mm분 ss초")
-            val formattedTime = dateTimeWithOffset.format(formatter)
+        val registerInfo = hashMapOf(
+            "date" to currentTimestamp,
+            "picture" to reviewImageURL,
+            "review" to reviewText,
+            "storeId" to storeId,
+            "storeName" to storeName,
+            "score" to starCount,
+            "userName" to LoginApp.username,
+            "id" to LoginApp.id
+        )
+        val currentDateTime = LocalDateTime.now()
+        val formatter2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+        val formattedDateTime = currentDateTime.format(formatter2)
 
-            // 타임스탬프 형식으로 변환
-            val timestamp = Timestamp.valueOf(formattedTime)
-//            val timestamp: Long = Instant.now().toEpochMilli()
-
-            var starCount = binding.ratingValue.text
-            val registerInfo = hashMapOf(
-                "date" to timestamp,
-                "picture" to reviewImageURL,
-                "review" to reviewText,
-                "storeId" to storeId,
-                "storeName" to storeName,
-                "score" to starCount,
-                "userName" to LoginApp.username,
-                "id" to LoginApp.id
-            )
-
-            val formatter2 = DateTimeFormatter.ofPattern("yyyyMMddhhmmssSS")
-            val formattedDateTime = currentDateTime.format(formatter2)
-
-            db.collection("user")
-                .document(formattedDateTime)
-                .set(registerInfo)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "리뷰 등록 완료!", Toast.LENGTH_SHORT).show()
-                    val myIntent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    startActivity(myIntent)
-                }
-        }
-
-        private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            try {
-                var inputStream = contentResolver.openInputStream(fileUri)
-
-                //inJustDecodeBounds 값을 true 로 설정한 상태에서 decodeXXX() 를 호출.
-                //로딩 하고자 하는 이미지의 각종 정보가 options 에 설정 된다.
-                BitmapFactory.decodeStream(inputStream, null, options)
-                inputStream!!.close()
-                inputStream = null
-            } catch (e: Exception) {
-                e.printStackTrace()
+        db.collection("review")
+            .document(formattedDateTime)
+            .set(registerInfo)
+            .addOnSuccessListener {
+                Toast.makeText(this, "리뷰 등록 완료!", Toast.LENGTH_SHORT).show()
+                val myIntent = Intent(this@RegisterActivity, MainActivity::class.java)
+                startActivity(myIntent)
             }
-            //비율 계산........................
-            val (height: Int, width: Int) = options.run { outHeight to outWidth }
-            var inSampleSize = 1
-            //inSampleSize 비율 계산
-            if (height > reqHeight || width > reqWidth) {
-
-                val halfHeight: Int = height / 2
-                val halfWidth: Int = width / 2
-
-                while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
-                    inSampleSize *= 2
-                }
-            }
-            return inSampleSize
-        }
     }
+
+    private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        try {
+            var inputStream = contentResolver.openInputStream(fileUri)
+            BitmapFactory.decodeStream(inputStream, null, options)
+            inputStream!!.close()
+            inputStream = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        //비율 계산
+        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+        var inSampleSize = 1
+        //inSampleSize 비율 계산
+        if (height > reqHeight || width > reqWidth) {
+
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
+    }
+}

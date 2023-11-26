@@ -2,7 +2,6 @@ package com.android.hakssok
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.android.hakssok.databinding.ActivityMainBinding
 import com.android.hakssok.databinding.ActivityRealBinding
 
 class RealActivity : AppCompatActivity() {
@@ -13,6 +12,5 @@ class RealActivity : AppCompatActivity() {
         binding = ActivityRealBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.viewpagerReal.adapter = ViewPagerAdapter(this) // 어댑터 생성
-
     }
 }
