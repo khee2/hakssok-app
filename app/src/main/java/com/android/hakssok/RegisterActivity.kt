@@ -138,36 +138,48 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.reviewSumbit.setOnClickListener {
-            // fb storge에 이미지 업로드
-            if (binding.userImageView != null && binding.userImageView.drawable is BitmapDrawable) {
-                val image: Drawable = binding.userImageView.drawable
-                val bitmap: Bitmap = (image as BitmapDrawable).bitmap
+            // 확인 메시지 표시
+            val alertDialogBuilder = AlertDialog.Builder(binding.root.context)
+            alertDialogBuilder
+                .setMessage("리뷰를 등록하시겠습니까?")
+                .setPositiveButton("예") { _, _ ->
 
-                val baos = ByteArrayOutputStream()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 100, baos)
-                } else {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-                }
-                val data = baos.toByteArray()
+                    // fb storge에 이미지 업로드
+                    if (binding.userImageView != null && binding.userImageView.drawable is BitmapDrawable) {
+                        val image: Drawable = binding.userImageView.drawable
+                        val bitmap: Bitmap = (image as BitmapDrawable).bitmap
 
-                val storageRef = storage.reference
-                val timestamp =
-                    SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.getDefault()).format(Date())
-                val fileName = "image/${timestamp}.jpg"
-                val bitmapRef = storageRef.child(fileName)
+                        val baos = ByteArrayOutputStream()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 100, baos)
+                        } else {
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                        }
+                        val data = baos.toByteArray()
 
-                val uploadTask: UploadTask = bitmapRef.putBytes(data)
-                uploadTask.addOnSuccessListener {
-                    bitmapRef.downloadUrl.addOnSuccessListener {
-                        var reviewImageURL = it.toString()
-                        Log.d("reviewImageUR11L", reviewImageURL)
-                        ReviewLoad(reviewImageURL)
+                        val storageRef = storage.reference
+                        val timestamp =
+                            SimpleDateFormat(
+                                "yyyyMMddHHmmssSSS",
+                                Locale.getDefault()
+                            ).format(Date())
+                        val fileName = "image/${timestamp}.jpg"
+                        val bitmapRef = storageRef.child(fileName)
+
+                        val uploadTask: UploadTask = bitmapRef.putBytes(data)
+                        uploadTask.addOnSuccessListener {
+                            bitmapRef.downloadUrl.addOnSuccessListener {
+                                var reviewImageURL = it.toString()
+                                Log.d("reviewImageUR11L", reviewImageURL)
+                                ReviewLoad(reviewImageURL)
+                            }
+                        }
+                    } else {
+                        ReviewLoad("")
                     }
                 }
-            } else {
-                ReviewLoad("")
-            }
+                .setNegativeButton("아니오") { _, _ -> }
+                .show()
         }
 
         binding.reviewBackBtn.setOnClickListener {
@@ -204,7 +216,7 @@ class RegisterActivity : AppCompatActivity() {
             .set(registerInfo)
             .addOnSuccessListener {
                 Toast.makeText(this, "리뷰 등록 완료!", Toast.LENGTH_SHORT).show()
-                val myIntent = Intent(this@RegisterActivity, MainActivity::class.java)
+                val myIntent = Intent(this@RegisterActivity, RealActivity::class.java)
                 startActivity(myIntent)
             }
     }

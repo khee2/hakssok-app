@@ -22,32 +22,27 @@ class MyReviewFragment : Fragment(), MyReviewAdapterListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         val binding = FragmentMyReviewBinding.inflate(inflater, container, false)
         rootView = binding.root
-
         db.collection("review")
             .whereEqualTo("id", "103454243208198857541")
             .get()
             .addOnSuccessListener { result ->
-                var count = 0
                 for (info in result) {
                     val reviewInfo = MyReviewListLayout(
                         info.id,
-                        info.get("storeName") as String?,
-                        info.get("score") as Int?,
-                        info.get("review") as String?,
-                        info.get("picture") as String?
+                        info.getString("storeName"),
+                        info.getLong("score")?.toInt(),
+                        info.getString("review"),
+                        info.getString("picture")
                     )
-                    count++
-                    Log.d("storeName 나와라", info.get("storeName").toString())
-                    Log.d("score 나와라", info.get("score").toString())
-                    Log.d("review 나와라", info.get("review").toString())
-                    Log.d("picture 나와라", info.get("picture").toString())
                     itemList.add(reviewInfo)
                 }
                 binding.recyclerView.layoutManager = LinearLayoutManager(activity)
                 binding.recyclerView.adapter = MyReviewAdapter(itemList, this)
+                val count = itemList.size
                 binding.reviewCount.text = "내가 작성한 리뷰 총 ${count.toString()}개"
             }
             .addOnFailureListener {
