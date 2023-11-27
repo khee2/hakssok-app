@@ -8,8 +8,9 @@ import com.google.firebase.auth.auth
 class LoginApp : MultiDexApplication(){
     companion object {
         lateinit var auth: FirebaseAuth
-        var id: String ? = "103454243208198857541"
-        var username: String ? = "노경희"
+        var id: String ? = null
+        var token_id: String ? = null
+        var username: String ? = null
     }
     override fun onCreate() {
         super.onCreate()

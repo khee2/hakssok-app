@@ -29,19 +29,25 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                val credential = GoogleAuthProvider.getCredential(
+                    account.idToken,
+                    null
+                ) // TODO account.id를 사용하게 되면 TAG 에러가 발생하게 됨. 이유 더 찾아 보기
                 LoginApp.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            LoginApp.id = account.id
+                            LoginApp.id =
+                                account.id // 시간이 지나 갱신되는 idToken 대신 값이 항상 값이 일정한 id를 사용. 리뷰 등록 및 내 리뷰 관리에서 id를 사용하여 데이터를 저장하고 불러옴.
+                            LoginApp.token_id = account.idToken
                             LoginApp.username = account.familyName + account.givenName
 
-                            db.collection("user").document(account.id!!).get()
+                            // TODO 더 좋은 방법: intent putExtra로 넘기기 (LoginActivity -> CollegeSelectActivity)
+                            db.collection("user").document(LoginApp.token_id!!).get()
                                 .addOnSuccessListener { documentSnapshot ->
                                     if (documentSnapshot.exists()) { // 기존 사용자
                                         val myIntent = Intent(
                                             this@LoginActivity,
-                                            MainActivity::class.java
+                                            RealActivity::class.java
                                         )
                                         startActivity(myIntent)
                                         finish()
@@ -53,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
                                             "college" to ""
                                         )
 
-                                        db.collection("user").document(account.id!!)
+                                        db.collection("user").document(LoginApp.token_id!!)
                                             .set(user_info)
                                             .addOnSuccessListener {
                                                 val myIntent = Intent(
@@ -72,9 +78,11 @@ class LoginActivity : AppCompatActivity() {
                                             }
                                     }
                                 }
+                                .addOnFailureListener { e ->
+                                    Log.e("예외 발생", "Firebase 데이터베이스에서 문서를 가져오는 중 오류 발생", e)
+                                }
                         } else {
                             Log.w("TAG", "signInWithCredential:failure", task.exception)
-//                            changeVisibility("logout")
                         }
                     }
             } catch (e: ApiException) {

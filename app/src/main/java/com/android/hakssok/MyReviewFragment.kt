@@ -27,7 +27,7 @@ class MyReviewFragment : Fragment(), MyReviewAdapterListener {
         val binding = FragmentMyReviewBinding.inflate(inflater, container, false)
         rootView = binding.root
         db.collection("review")
-            .whereEqualTo("id", "103454243208198857541")
+            .whereEqualTo("id", LoginApp.id)
             .get()
             .addOnSuccessListener { result ->
                 for (info in result) {

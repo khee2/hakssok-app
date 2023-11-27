@@ -11,6 +11,6 @@ class RealActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRealBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.viewpagerReal.adapter = ViewPagerAdapter(this) // 어댑터 생성
+        binding.viewpagerReal.adapter = ViewPagerAdapter(this)
     }
 }

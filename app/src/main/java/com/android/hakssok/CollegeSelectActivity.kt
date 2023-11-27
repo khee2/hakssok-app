@@ -13,14 +13,13 @@ class CollegeSelectActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
     lateinit var binding: ActivityCollegeSelectBinding
-    private var select_item = ""
+    private var selectItem = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCollegeSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var textInputLayout = binding.textInputLayout
         var autoCompleteTextView = binding.collegeText
 
         val college = resources.getStringArray(R.array.college)
@@ -32,21 +31,22 @@ class CollegeSelectActivity : AppCompatActivity() {
         autoCompleteTextView.setAdapter(collegeAdapter)
 
         autoCompleteTextView.setOnItemClickListener { adapterView, view, position, id ->
-            select_item = adapterView.getItemAtPosition(position) as String
+            selectItem = adapterView.getItemAtPosition(position) as String
         }
         binding.collegeButtonSelect.setOnClickListener {
             val user = db.collection("user")
 
-            db.collection("user").document(LoginApp.id!!)
+            // TODO 더 좋은 방법: intent getExtra로 받기 (CollegeSelectActivity <- LoginActivity)
+            db.collection("user").document(LoginApp.token_id!!)
                 .update(
                     mapOf(
-                        "college" to select_item
+                        "college" to selectItem
                     ),
                 )
                 .addOnSuccessListener {
                     val myIntent = Intent(
                         this@CollegeSelectActivity,
-                        MainActivity::class.java
+                        RealActivity::class.java
                     )
                     startActivity(myIntent)
                     finish()
