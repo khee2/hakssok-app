@@ -38,4 +38,3 @@ class MainActivity : AppCompatActivity() {
             .replace(binding.mainContent.id, fragment).commit()
     }
 }
-
