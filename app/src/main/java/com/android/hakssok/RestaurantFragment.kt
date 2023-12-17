@@ -1,6 +1,7 @@
 package com.android.hakssok
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,8 @@ class RestaurantFragment : Fragment() {
                                 info.get("date") as ArrayList<String>,
                                 info.get("content") as ArrayList<String>,
                                 info.get("college") as ArrayList<String>,
+                                info.get("latitude") as String?,
+                                info.get("longitude") as String?
                             )
                             itemList.add(restaurantInfo)
                         }
@@ -88,5 +91,7 @@ class RestaurantListLayout(
     val date: ArrayList<String>,
     val content: ArrayList<String>?,
     val college: ArrayList<String>?,
+    val latitude: String?,
+    val longitude: String?
 )
 

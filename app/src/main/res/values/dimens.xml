@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="imgSize">150dp</dimen>
+    <!-- Height of the bottom navigation / system bar. -->
+    <dimen name="navigation_bar_height">54dp</dimen>
 </resources>

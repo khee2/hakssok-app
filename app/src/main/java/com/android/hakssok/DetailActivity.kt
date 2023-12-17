@@ -3,6 +3,7 @@ package com.android.hakssok
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,8 +14,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.firestore
@@ -23,11 +24,14 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var googleMap: GoogleMap? = null
     private lateinit var binding: DetailPageBinding
+    private lateinit var mapFragment: SupportMapFragment
     private var isFabOpen = false
 
     private val db = Firebase.firestore
     private val reviewList = arrayListOf<ReviewListLayout>()
     private val couponList = arrayListOf<CouponListLayout>()
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,17 +50,12 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.couponRecyclerView.adapter = couponAdapter
 
-        val mapFragment: SupportMapFragment =
-            supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+        latitude = intent.getStringExtra("latitude").toString().toDouble()
+        longitude = intent.getStringExtra("longitude").toString().toDouble()
+
+        mapFragment =
+            supportFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-//        suwon1 = new LatLng(37.287617, 127.018057);
-//        mMap.addMarker(new MarkerOptions().position(suwon1).title("방화수령전"));
-//
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(suwon1));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(suwon1,14));//지도를 14배율로 확대해서 보여줌
-
-        // TODO 하단 탭 눌리게 하기
 
         val restaurant = db.collection("store")
         restaurant
@@ -83,17 +82,14 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 couponAdapter.notifyDataSetChanged()
             }
 
-        val user = db.collection("user")
+        val user = db.collection("review")
         user.whereEqualTo("storeId", intent.getStringExtra("storeId"))
             .get()
             .addOnSuccessListener { result ->
-                // TODO TimeStamp 수정 필요
-                // score 라이브러리 사용하기
-                // 사진 저장 방법 찾아보기
-                // 구글 지도 마커 생성하기
                 for (review in result) {
+                    Log.d("goeun", review["userName"] as String)
                     val review = ReviewListLayout(
-                        review["username"] as String?,
+                        review["userName"] as String?,
                         review["date"] as Timestamp,
                         review["review"] as String?,
                         review["score"] as Number?,
@@ -129,13 +125,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     override fun onMapReady(p0: GoogleMap) {
         googleMap = p0
-        val lating = LatLng(37.9, 126.7)
-        val position = CameraPosition.builder()
-            .target(lating)
-            .zoom(16f)
-            .build()
-        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(position))
-
+        val latLong = LatLng(latitude, longitude)
+        googleMap!!.clear()
+        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLong))
+        googleMap!!.addMarker(MarkerOptions().position(latLong).title("여기"))
+        googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLong, 20f))
     }
 
     private fun changeFragment(fragment: Fragment) {

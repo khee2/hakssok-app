@@ -15,7 +15,7 @@ import com.google.firebase.firestore.firestore
 
 class CollegeFragment : Fragment() {
     private val db = Firebase.firestore
-    private val itemList = arrayListOf<ListLayout>()
+    private val itemList = arrayListOf<RestaurantListForCollegeSearch>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,13 +66,18 @@ class CollegeFragment : Fragment() {
                         for (info in result) {
                             val collegeArray = info.get("college") as ArrayList<*>
                             val index = collegeArray.indexOf(categoryList[num])
-                            val restaurantInfo = ListLayout(
+                            val restaurantInfo = RestaurantListForCollegeSearch(
                                 info["storeName"] as String?,
+                                info.id,
                                 info["location"] as String?,
-                                (info.get("date") as ArrayList<*>)[index] as String?,
-                                (info.get("content") as ArrayList<*>)[index] as String?,
-                                null,
-                                info.id
+                                info.get("date") as ArrayList<String>,
+                                info.get("content") as ArrayList<String>,
+                                info.get("college") as ArrayList<String>,
+                                info.get("latitude") as String?,
+                                info.get("longitude") as String?,
+                                index,
+                                true
+
                             )
                             itemList.add(restaurantInfo)
                         }
@@ -91,11 +96,15 @@ class CollegeFragment : Fragment() {
     }
 }
 
-class ListLayout(
+class RestaurantListForCollegeSearch(
     val name: String?,
+    val storeId: String?,
     val location: String?,
-    val date: String?,
-    val content: String?,
-    val college: String?,
-    val storeId: String?
+    val date: ArrayList<String>,
+    val content: ArrayList<String>?,
+    val college: ArrayList<String>?,
+    val latitude: String?,
+    val longitude: String?,
+    val index: Int,
+    val notShowCollege: Boolean
 )
