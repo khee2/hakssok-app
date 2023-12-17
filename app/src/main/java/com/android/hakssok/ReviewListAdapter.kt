@@ -1,11 +1,16 @@
 package com.android.hakssok
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -32,10 +37,10 @@ class ReviewListAdapter(val reviewList: ArrayList<ReviewListLayout>) :
         val str = format.format(time)
         holder.date.text = str
         holder.review.text = reviewList[position].review
-        //TODO 사진 추가
         holder.ratingBar.rating = reviewList[position].score.toString().toFloat()
-
-        //TODO 플로어 버튼 누르면 리뷰 화면으로 전환
+        Glide.with(holder.itemView.context).load(reviewList[position].picture)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(20))) // 사진 테두리
+            .into(holder.picture)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,5 +48,6 @@ class ReviewListAdapter(val reviewList: ArrayList<ReviewListLayout>) :
         val date: TextView = itemView.findViewById(R.id.date)
         val review: TextView = itemView.findViewById(R.id.review)
         val ratingBar: RatingBar = itemView.findViewById(R.id.ratingBar)
+        val picture: ImageView = itemView.findViewById(R.id.reviewImage)
     }
 }

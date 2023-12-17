@@ -41,12 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/radius_background"
-                android:paddingLeft="30dp"
+                android:paddingLeft="40dp"
                 android:paddingTop="50dp"
-                android:paddingRight="30dp"
+                android:paddingRight="40dp"
+                android:scrollbars="none"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -83,6 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
+                        android:overScrollMode="never"
                         android:background="@color/white"
                         android:nestedScrollingEnabled="false"
                         app:layout_constraintBottom_toTopOf="@id/phone" />

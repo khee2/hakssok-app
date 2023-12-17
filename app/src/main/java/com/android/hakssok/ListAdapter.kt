@@ -28,10 +28,11 @@ class ListAdapter(val itemList: ArrayList<RestaurantListForCollegeSearch>) :
         holder.content.text = itemList[position].content?.get(index)
 
         val college = itemList[position].college?.get(index)
-        if (college != null) {
-            holder.college.text = college
-        } else {
+        val noShowCollege = itemList[position].notShowCollege
+        if (noShowCollege) {
             holder.college.visibility = View.GONE
+        } else {
+            holder.college.text = college
         }
 
         holder.itemView.setOnClickListener {

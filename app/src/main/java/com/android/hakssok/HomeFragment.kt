@@ -30,7 +30,6 @@ class HomeFragment : Fragment() {
 
         // TODO searchKeyword intent로 수정
         val searchKeyword = "공과대학"
-
         val restaurant = db.collection("store")
         restaurant.whereArrayContains("college", searchKeyword)
             .get()
@@ -48,7 +47,8 @@ class HomeFragment : Fragment() {
                         info.get("college") as ArrayList<String>,
                         info.get("latitude") as String?,
                         info.get("longitude") as String?,
-                        index
+                        index,
+                        false
                     )
                     itemList.add(restaurantInfo)
                 }

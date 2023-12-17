@@ -75,7 +75,9 @@ class CollegeFragment : Fragment() {
                                 info.get("college") as ArrayList<String>,
                                 info.get("latitude") as String?,
                                 info.get("longitude") as String?,
-                                index
+                                index,
+                                true
+
                             )
                             itemList.add(restaurantInfo)
                         }
@@ -103,5 +105,6 @@ class RestaurantListForCollegeSearch(
     val college: ArrayList<String>?,
     val latitude: String?,
     val longitude: String?,
-    val index: Int
+    val index: Int,
+    val notShowCollege: Boolean
 )

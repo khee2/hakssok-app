@@ -3,6 +3,7 @@ package com.android.hakssok
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -81,14 +82,14 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 couponAdapter.notifyDataSetChanged()
             }
 
-        val user = db.collection("user")
+        val user = db.collection("review")
         user.whereEqualTo("storeId", intent.getStringExtra("storeId"))
             .get()
             .addOnSuccessListener { result ->
-                // TODO 사진 수정
                 for (review in result) {
+                    Log.d("goeun", review["userName"] as String)
                     val review = ReviewListLayout(
-                        review["username"] as String?,
+                        review["userName"] as String?,
                         review["date"] as Timestamp,
                         review["review"] as String?,
                         review["score"] as Number?,
