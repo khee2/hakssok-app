@@ -11,6 +11,7 @@ class LoginApp : MultiDexApplication(){
         var id: String ? = null
         var token_id: String ? = null
         var username: String ? = null
+        var college: String ? = null
     }
     override fun onCreate() {
         super.onCreate()

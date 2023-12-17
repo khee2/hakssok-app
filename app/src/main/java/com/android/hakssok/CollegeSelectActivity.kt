@@ -34,16 +34,15 @@ class CollegeSelectActivity : AppCompatActivity() {
             selectItem = adapterView.getItemAtPosition(position) as String
         }
         binding.collegeButtonSelect.setOnClickListener {
-            val user = db.collection("user")
-
             // TODO 더 좋은 방법: intent getExtra로 받기 (CollegeSelectActivity <- LoginActivity)
-            db.collection("user").document(LoginApp.token_id!!)
+            db.collection("user").document(LoginApp.id!!)
                 .update(
                     mapOf(
                         "college" to selectItem
                     ),
                 )
                 .addOnSuccessListener {
+                    LoginApp.college = selectItem
                     val myIntent = Intent(
                         this@CollegeSelectActivity,
                         RealActivity::class.java

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Hakssok</string>
     <string name="category">음식점 모아보기</string>
     <string name="college">제휴 모아보기</string>

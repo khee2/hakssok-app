@@ -36,15 +36,14 @@ class LoginActivity : AppCompatActivity() {
                 LoginApp.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            LoginApp.id =
-                                account.id // 시간이 지나 갱신되는 idToken 대신 값이 항상 값이 일정한 id를 사용. 리뷰 등록 및 내 리뷰 관리에서 id를 사용하여 데이터를 저장하고 불러옴.
+                            LoginApp.id = account.id // 시간이 지나 갱신되는 idToken 대신 값이 항상 값이 일정한 id를 사용. 리뷰 등록 및 내 리뷰 관리에서 id를 사용하여 데이터를 저장하고 불러옴.
                             LoginApp.token_id = account.idToken
                             LoginApp.username = account.familyName + account.givenName
-
                             // TODO 더 좋은 방법: intent putExtra로 넘기기 (LoginActivity -> CollegeSelectActivity)
-                            db.collection("user").document(LoginApp.token_id!!).get()
+                            db.collection("user").document(LoginApp.id!!).get()
                                 .addOnSuccessListener { documentSnapshot ->
                                     if (documentSnapshot.exists()) { // 기존 사용자
+                                        LoginApp.college = documentSnapshot.getString("college")
                                         val myIntent = Intent(
                                             this@LoginActivity,
                                             RealActivity::class.java
@@ -59,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                                             "college" to ""
                                         )
 
-                                        db.collection("user").document(LoginApp.token_id!!)
+                                        db.collection("user").document(LoginApp.id!!)
                                             .set(user_info)
                                             .addOnSuccessListener {
                                                 val myIntent = Intent(
