@@ -1,10 +1,12 @@
 package com.android.hakssok
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.android.hakssok.LoginApp.Companion.profileImage
 import com.android.hakssok.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -36,26 +38,38 @@ class LoginActivity : AppCompatActivity() {
                 LoginApp.auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            LoginApp.id = account.id // 시간이 지나 갱신되는 idToken 대신 값이 항상 값이 일정한 id를 사용. 리뷰 등록 및 내 리뷰 관리에서 id를 사용하여 데이터를 저장하고 불러옴.
+                            LoginApp.id =
+                                account.id // 시간이 지나 갱신되는 idToken 대신 값이 항상 값이 일정한 id를 사용. 리뷰 등록 및 내 리뷰 관리에서 id를 사용하여 데이터를 저장하고 불러옴.
                             LoginApp.token_id = account.idToken
-                            LoginApp.username = account.familyName + account.givenName
+
                             // TODO 더 좋은 방법: intent putExtra로 넘기기 (LoginActivity -> CollegeSelectActivity)
                             db.collection("user").document(LoginApp.id!!).get()
                                 .addOnSuccessListener { documentSnapshot ->
-                                    if (documentSnapshot.exists()) { // 기존 사용자
+                                    if (documentSnapshot.exists()) { // 기존 사용자 정보 가져오기
+                                        // profile update에서 사용할 정보를 클래스에 저장
                                         LoginApp.college = documentSnapshot.getString("college")
+                                        LoginApp.birth = documentSnapshot.getString("birth")
+                                        LoginApp.profileImage =
+                                            documentSnapshot.getString("profileImage")
+                                        LoginApp.username = documentSnapshot.getString("name")
                                         val myIntent = Intent(
                                             this@LoginActivity,
                                             RealActivity::class.java
                                         )
                                         startActivity(myIntent)
                                         finish()
-                                    } else { // 신규 사용자 등록
+                                    } else { // 신규 사용자 등록하기
+                                        LoginApp.username =
+                                            account.familyName + account.givenName // 구글 계정의 이름 가져오기 (프로필 초기화면)
+                                        LoginApp.profileImage =
+                                            account?.photoUrl.toString() // 구글 계정의 프로필 이미지 가져오기 (프로필 초기화면)
+                                        Log.d("profileImage는?!",LoginApp.profileImage.toString())
                                         val user_info = hashMapOf(
                                             "name" to account.familyName + account.givenName,
                                             "email" to account.email,
                                             "id" to account.id,
-                                            "college" to ""
+                                            "college" to "",
+                                            "profileImage" to LoginApp.profileImage
                                         )
 
                                         db.collection("user").document(LoginApp.id!!)
