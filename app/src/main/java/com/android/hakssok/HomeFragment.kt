@@ -1,5 +1,6 @@
 package com.android.hakssok
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,16 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.username.text = LoginApp.username
+        binding.myCollegeName.text = LoginApp.college
+        binding.next.setOnClickListener{
+            val myIntent = Intent(
+                activity,
+                MyProfileActivity::class.java
+            )
+            startActivity(myIntent)
+        }
+
         val listAdapter = ListAdapter(itemList)
 
         binding.myCollegeCouponRecyclerView.layoutManager =
@@ -29,7 +40,7 @@ class HomeFragment : Fragment() {
         binding.myCollegeCouponRecyclerView.adapter = listAdapter
 
         // TODO searchKeyword intent로 수정
-        val searchKeyword = "공과대학"
+        val searchKeyword = LoginApp.college.toString()
         val restaurant = db.collection("store")
         restaurant.whereArrayContains("college", searchKeyword)
             .get()

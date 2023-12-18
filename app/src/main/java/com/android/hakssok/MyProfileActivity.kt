@@ -1,42 +1,37 @@
 package com.android.hakssok
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.android.hakssok.databinding.ActivityMyProfileBinding
-import com.android.hakssok.databinding.ActivityRegisterBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.Firebase
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -54,11 +49,8 @@ class MyProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMyProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.nickname.text =
-            Editable.Factory.getInstance()
-                .newEditable(LoginApp.username.toString()) // Editable 형식으로 값을 설정
+        profileShow()
         binding.college.hint = LoginApp.college.toString()
-
         val college = resources.getStringArray(R.array.college)
         val collegeAdapter = ArrayAdapter(
             this,
@@ -206,11 +198,11 @@ class MyProfileActivity : AppCompatActivity() {
                             bitmapRef.downloadUrl.addOnSuccessListener {
                                 var profileImageURL = it.toString()
                                 Log.d("profileImageOk????!", profileImageURL)
-                                ProfileLoad(profileImageURL)
+                                profileLoad(profileImageURL, birth, selectItem, nickname)
                             }
                         }
                     } else {
-                        ProfileLoad("")
+                        profileLoad("", birth, selectItem, nickname)
                     }
                 }
                 .setNegativeButton("아니오") { _, _ -> }
@@ -226,10 +218,13 @@ class MyProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun ProfileLoad(profileImageURL: String) {
-        nickname = binding.nickname.text.toString()
-
-
+    // db의 user문서에 profile update
+    private fun profileLoad(
+        profileImageURL: String,
+        birth: String,
+        selectItem: String,
+        nickname: String
+    ) {
         Log.d("name은?!", nickname)
         Log.d("college는?!", selectItem)
         Log.d("profileImage는?!", profileImageURL)
@@ -244,12 +239,13 @@ class MyProfileActivity : AppCompatActivity() {
                 ),
             )
             .addOnSuccessListener {
-                val myIntent = Intent(
-                    this@MyProfileActivity,
-                    RealActivity::class.java
-                )
-                startActivity(myIntent)
-                finish()
+                LoginApp.username = nickname
+                LoginApp.college = selectItem
+                LoginApp.birth = birth
+                LoginApp.profileImage = profileImageURL
+                Log.d("수정 성공!", "성공함.")
+                Toast.makeText(this, "프로필이 수정되었습니다!", Toast.LENGTH_LONG).show()
+                profileShow()
             }
             .addOnFailureListener { e ->
                 Log.w(
@@ -257,6 +253,26 @@ class MyProfileActivity : AppCompatActivity() {
                     "Error writing document", e
                 )
             }
+    }
+
+    // db에 저장되어 있는 사용자 정보 가져와서 보여주기
+    private fun profileShow() {
+        binding.nickname.text =
+            Editable.Factory.getInstance()
+                .newEditable(LoginApp.username.toString()) // Editable 형식으로 값을 설정
+        binding.college.hint = LoginApp.college.toString()
+        if (LoginApp.birth != null) { // 생일 정보가 없는 경우
+            binding.birth.text = Editable.Factory.getInstance()
+                .newEditable(LoginApp.birth.toString())
+        }
+
+        if (LoginApp.profileImage == null) { // 프로필 이미지가 없는 경우
+            binding.profileImageView.setImageResource(R.drawable.profile_image) // 기본 이미지
+        } else {
+            Glide.with(binding.root.context).load(LoginApp.profileImage)
+//                .apply(RequestOptions.bitmapTransform(RoundedCorners(20))) // 사진 테두리
+                .into(binding.profileImageView)
+        }
     }
 
     private fun calculateInSampleSize(fileUri: Uri, reqWidth: Int, reqHeight: Int): Int {
