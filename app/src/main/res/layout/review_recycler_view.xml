@@ -36,7 +36,8 @@
             android:secondaryProgressTint="@color/black"
             android:transformPivotX="0dp"
             android:transformPivotY="0dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="6dp"/>
 
     </LinearLayout>
 
