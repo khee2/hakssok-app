@@ -35,7 +35,7 @@
                     android:id="@+id/detailTool"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="@color/white"
                     android:fitsSystemWindows="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">

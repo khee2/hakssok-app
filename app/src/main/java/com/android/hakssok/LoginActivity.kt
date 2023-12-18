@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("안으로 들어옴3","응 들어옴3")
 
         super.onCreate(savedInstanceState)
 
