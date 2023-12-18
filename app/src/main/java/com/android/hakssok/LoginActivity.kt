@@ -1,12 +1,10 @@
 package com.android.hakssok
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.android.hakssok.LoginApp.Companion.profileImage
 import com.android.hakssok.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -62,8 +60,8 @@ class LoginActivity : AppCompatActivity() {
                                         LoginApp.username =
                                             account.familyName + account.givenName // 구글 계정의 이름 가져오기 (프로필 초기화면)
                                         LoginApp.profileImage =
-                                            account?.photoUrl.toString() // 구글 계정의 프로필 이미지 가져오기 (프로필 초기화면)
-                                        Log.d("profileImage는?!",LoginApp.profileImage.toString())
+                                            account.photoUrl.toString() // 구글 계정의 프로필 이미지 가져오기 (프로필 초기화면)
+                                        Log.d("profileImage는?!", LoginApp.profileImage.toString())
                                         val user_info = hashMapOf(
                                             "name" to account.familyName + account.givenName,
                                             "email" to account.email,

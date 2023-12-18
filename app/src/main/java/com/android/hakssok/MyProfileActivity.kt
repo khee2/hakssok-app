@@ -14,7 +14,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,8 +22,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.android.hakssok.databinding.ActivityMyProfileBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.UploadTask
@@ -32,9 +29,7 @@ import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class MyProfileActivity : AppCompatActivity() {
     lateinit var binding: ActivityMyProfileBinding

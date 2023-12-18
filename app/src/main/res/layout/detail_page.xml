@@ -13,7 +13,7 @@
         android:gravity="bottom"
         app:umanoDragView="@+id/restaurant"
         app:umanoOverlay="true"
-        app:umanoPanelHeight="200dp"
+        app:umanoPanelHeight="225dp"
         app:umanoScrollableView="@id/restaurant"
         app:umanoShadowHeight="0dp">
 

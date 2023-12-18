@@ -1,12 +1,9 @@
 package com.android.hakssok
 
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.hakssok.databinding.DetailPageBinding
@@ -101,10 +98,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
         // ****여기 부분 새로 추가함.****
-        binding.registerBtn.setOnClickListener{
+        binding.registerBtn.setOnClickListener {
             val MyIntent = Intent(this, RegisterActivity::class.java)
-            MyIntent.putExtra("storeId",intent.getStringExtra("storeId"))
-            MyIntent.putExtra("storeName",intent.getStringExtra("storeName"))
+            MyIntent.putExtra("storeId", intent.getStringExtra("storeId"))
+            MyIntent.putExtra("storeName", intent.getStringExtra("storeName"))
             startActivity(MyIntent)
         }
 

@@ -1,5 +1,6 @@
 package com.android.hakssok
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,12 +15,14 @@ class RealActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRealBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.viewPager.adapter = ViewPagerAdapter(this)
+        val viewPagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = viewPagerAdapter
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment_home -> {
-                    changeFragment(HomeFragment())
+                    val intent = Intent(this.intent)
+                    startActivity(intent)
                 }
                 R.id.fragment_menu -> {
                     changeFragment(RestaurantFragment())
