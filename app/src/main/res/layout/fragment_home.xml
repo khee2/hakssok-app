@@ -28,7 +28,6 @@
                 android:layout_height="100dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="40dp"
-                android:background="@drawable/graduate_hat"
                 app:layout_constraintRight_toLeftOf="@id/username"
                 app:layout_constraintTop_toTopOf="@id/profile" />
 

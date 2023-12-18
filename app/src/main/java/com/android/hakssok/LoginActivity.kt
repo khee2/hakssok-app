@@ -15,13 +15,17 @@ import com.google.firebase.firestore.firestore
 
 
 class LoginActivity : AppCompatActivity() {
+
     private val db = Firebase.firestore
 
     lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val requestLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         )
@@ -60,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                                         LoginApp.username =
                                             account.familyName + account.givenName // 구글 계정의 이름 가져오기 (프로필 초기화면)
                                         LoginApp.profileImage =
-                                            account.photoUrl.toString() // 구글 계정의 프로필 이미지 가져오기 (프로필 초기화면)
+                                            account?.photoUrl.toString() // 구글 계정의 프로필 이미지 가져오기 (프로필 초기화면)
                                         Log.d("profileImage는?!", LoginApp.profileImage.toString())
                                         val user_info = hashMapOf(
                                             "name" to account.familyName + account.givenName,

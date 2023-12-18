@@ -57,7 +57,6 @@ class MyReviewAdapter(
             Glide.with(binding.root.context).load(myReviewList[position].picture)
                 .apply(RequestOptions.bitmapTransform(RoundedCorners(20))) // 사진 테두리
                 .into(binding.myReviewPicture)
-            // TODO 이미지 크기 크기에 맞게 화면에 출력하기 -> 실제 안드로이드 앱의 글 등록(이미지 등록)을 통해 이미지 직접 저장해보고 결과 비교하기
         }
         binding.myReviewDelete.setOnClickListener {
             val documentId = myReviewList[position].documentId
