@@ -122,7 +122,12 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             MyIntent.putExtra("storeName",intent.getStringExtra("storeName"))
             startActivity(MyIntent)
         }
+
+        binding.backBtn.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
+
     override fun onMapReady(p0: GoogleMap) {
         googleMap = p0
         val latLong = LatLng(latitude, longitude)
