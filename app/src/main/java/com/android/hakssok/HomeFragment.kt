@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.myCollegeCouponRecyclerView.adapter = listAdapter
 
-        // TODO searchKeyword intent로 수정
         val searchKeyword = LoginApp.college.toString()
         val restaurant = db.collection("store")
         restaurant.whereArrayContains("college", searchKeyword)

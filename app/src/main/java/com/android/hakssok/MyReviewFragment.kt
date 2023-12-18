@@ -45,6 +45,13 @@ class MyReviewFragment : Fragment(), MyReviewAdapterListener {
                 val count = itemList.size
                 binding.reviewCount.text = "내가 작성한 리뷰 총 ${count.toString()}개"
             }
+            .addOnCompleteListener {
+                if (itemList.isEmpty()) {
+                    binding.noContentText.visibility = View.VISIBLE
+                } else {
+                    binding.noContentText.visibility = View.GONE
+                }
+            }
             .addOnFailureListener {
                 Log.d("실패","맞는 Id가 없음")
             }
