@@ -17,4 +17,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:editTextBackground">@drawable/ic_dummy_splash</item>
+        <item name="android:windowIsTranslucent">true</item>
+<!--        <item name="android:windowBackground">@drawable/splash_img</item>-->
+    </style>
+
+    <!--    <style name="SplashTheme.Splash" parent="Theme.SplashScreen">-->
+    <!--        &lt;!&ndash;        <item name="windowNoTitle">true</item>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <item name ="windowActionBar">false</item>&ndash;&gt;-->
+    <!--        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_dummy_splash</item>-->
+    <!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+    <!--    </style>-->
+    <!--    <style name="SplashTheme" parent="Theme.Material3.Light.NoActionBar">-->
+    <!--    <item name="android:statusBarColor">@android:color/transparent</item>-->
+    <!--    <item name="android:windowLightStatusBar">true</item>-->
+
+    <!--    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--        <item name="android:windowBackground">@drawble/</item> &lt;!&ndash;앱의 기본 색상&ndash;&gt;-->
+    <!--    </style>-->
 </resources>
