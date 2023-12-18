@@ -183,11 +183,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.reviewBackBtn.setOnClickListener {
-            val myIntent: Intent = Intent(
-                this@RegisterActivity,
-                DetailActivity::class.java
-            )
-            startActivity(myIntent)
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 

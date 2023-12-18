@@ -100,6 +100,18 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 reviewAdapter.notifyDataSetChanged()
             }
 
+        // ****여기 부분 새로 추가함.****
+        binding.registerBtn.setOnClickListener{
+            val MyIntent = Intent(this, RegisterActivity::class.java)
+            MyIntent.putExtra("storeId",intent.getStringExtra("storeId"))
+            MyIntent.putExtra("storeName",intent.getStringExtra("storeName"))
+            startActivity(MyIntent)
+        }
+
+        binding.backBtn.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment_home -> {
@@ -113,18 +125,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
             true
-        }
-
-        // ****여기 부분 새로 추가함.****
-        binding.registerBtn.setOnClickListener{
-            val MyIntent = Intent(this, RegisterActivity::class.java)
-            MyIntent.putExtra("storeId",intent.getStringExtra("storeId"))
-            MyIntent.putExtra("storeName",intent.getStringExtra("storeName"))
-            startActivity(MyIntent)
-        }
-
-        binding.backBtn.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
         }
     }
 
