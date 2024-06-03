@@ -25,7 +25,7 @@
 ![9](https://github.com/khee2/new-mobilesw/assets/124848492/e3c5077c-bdda-4c4d-9b9c-a8f0f7dc8f6b)
 
 
-## 🧷화면 설명
+## 🧷구현 화면
 ![16](https://github.com/khee2/new-mobilesw/assets/124848492/7dd0c0b9-393d-4c33-89d1-85535d850ae5)
 ![17](https://github.com/khee2/new-mobilesw/assets/124848492/510ee7ad-60f4-4a2c-a068-80461602c319)
 ![18](https://github.com/khee2/new-mobilesw/assets/124848492/ef3e93fd-7b78-4d68-a7f2-e26b49ab9498)
@@ -39,7 +39,7 @@
 ![26](https://github.com/khee2/new-mobilesw/assets/124848492/d1c3c831-339c-4e80-9854-5babef31c8da)
 
 
-## 🧷구현 화면 
+## 🧷프로토타입 화면 
 - 스플래쉬 화면 / 로그인 화면
   
 ![스플레쉬 화면](https://github.com/khee2/new-mobilesw/assets/124848492/525e41cc-b3a3-44da-a5db-5c65b7f65a9e)
@@ -55,15 +55,12 @@
 ![맛집 모아보기 (1)](https://github.com/khee2/new-mobilesw/assets/124848492/a140d955-0fe2-446c-b9c1-0a6f0c517575)
 ![제휴 모아보기](https://github.com/khee2/new-mobilesw/assets/124848492/128ee537-6428-499f-af3b-1ecb4dcb3709)
 
-- 가게 리뷰 보기 / 리뷰 등록 / 내 리뷰 관리
+- 가게 리뷰 보기 / 리뷰 등록 / 내 리뷰 관리 / 프로필 화면
   
 ![가게 정보   리뷰 (1)](https://github.com/khee2/new-mobilesw/assets/124848492/326e8977-8efa-4a61-af7e-a299a4836778)
 ![리뷰 관리; 오른족 스와이프 (2)](https://github.com/khee2/new-mobilesw/assets/124848492/1f0669b7-32e5-45ce-af97-5b65a7cede0c)
 ![리뷰 등록](https://github.com/khee2/new-mobilesw/assets/124848492/695930c1-6ded-4726-a4e5-7ade238dc105)
 
-- 프로필 화면
-  
-![프로필 화면](https://github.com/khee2/new-mobilesw/assets/124848492/29176f95-5d3b-41cf-a7b0-13e5d3b8b790)
 
 ## 🧷개선점 및 발전방향
 ![28](https://github.com/khee2/new-mobilesw/assets/124848492/21db0386-4520-447d-a450-f1e0ad682ca3)
